@@ -1,11 +1,12 @@
 using FileReaderController.Shared.Enums;
-using FileReaderController.Shared.Entities;
+using FileReaderController.Domain.Entities;
 
 namespace FileReaderController.Domain.Entities
 {
-    public class Cliente : EntitieBase
+    public class Client : EntitieBase
     {
-        public Cliente(int id, ELineType lineType, string cNPJ, string name, string businessArea) : base(id, lineType)
+        public Client(ELineType lineType, string cNPJ, string name, string businessArea, 
+                      string message, bool hasError) : base(lineType, message, hasError)
         {
             CNPJ = cNPJ;
             Name = name;

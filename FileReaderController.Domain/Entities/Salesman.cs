@@ -1,11 +1,12 @@
-using FileReaderController.Shared.Entities;
+using FileReaderController.Domain.Entities;
 using FileReaderController.Shared.Enums;
 
 namespace FileReaderController.Domain.Entities
 {
     public class Salesman : EntitieBase
     {
-        public Salesman(int id, ELineType lineType, string name, string cPF, decimal salary) : base(id, lineType)
+        public Salesman(ELineType lineType, string name, string cPF, decimal salary, 
+                        string message, bool hasError) : base(lineType, message, hasError)
         {
             Name = name;
             CPF = cPF;

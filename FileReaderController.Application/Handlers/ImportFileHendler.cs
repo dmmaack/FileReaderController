@@ -1,8 +1,10 @@
 using FileReaderController.Application.Commands;
 using FileReaderController.Application.Helpers;
+using FileReaderController.Domain.Entities;
 using FileReaderController.Shared.Commands;
 using FileReaderController.Shared.Enums;
 using FileReaderController.Shared.Hendlers;
+using System;
 using System.Linq;
 
 namespace FileReaderController.Application.Handlers
@@ -18,6 +20,8 @@ namespace FileReaderController.Application.Handlers
         {
             if (command.IsValid)
             {
+                FileReadSalesBase fileRead  = new FileReadSalesBase(command.FileName, DateTime.Now);
+
                 foreach (string line in command.FileReader)
                 {
                     ELineType lineType = ImportFileHelper.IdentifyLineType(line);
