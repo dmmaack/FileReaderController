@@ -5,6 +5,6 @@ namespace FileReaderController.Infra.Services
 {
     public class FileWriteService : IFileWriteService
     {
-        public void CreateFileFromLines(string[] linhas, string filePath, string fileName) => File.WriteAllLines(Path.Combine(filePath, fileName), linhas);
+        public void WriteFileFromLines(string[] linhas, string filePath, string fileName) => File.WriteAllLines(Path.Combine(filePath, fileName), linhas);
     }
 }

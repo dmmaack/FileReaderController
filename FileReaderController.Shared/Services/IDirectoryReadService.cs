@@ -2,8 +2,7 @@ namespace FileReaderController.Shared.Services
 {    
     public interface IDirectoryReadService
     {
-        string _filePath { get; }
-
+        string[] GetFiles();
         bool HasFiles();
         bool ValidateDirectory();
     }

@@ -8,7 +8,6 @@ using FileReaderController.Shared.Hendlers;
 using FileReaderController.Shared.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace FileReaderController.Application.Handlers
 {
@@ -79,8 +78,8 @@ namespace FileReaderController.Application.Handlers
                 }
 
                 var linesOutFile = fileReadSales.WriteFileLines();
-                _fileWriteServices.CreateFileFromLines(lines: linesOutFile, filePath: command.FilePath, fileName: command.FileName);
-                _fileWriteServices.CreateFileFromLines(lines: fileControllerReturn.ToArray(), filePath: command.FilePath, fileName: $"{command.FileName}.RET");
+                _fileWriteServices.WriteFileFromLines(lines: linesOutFile, filePath: command.FilePath, fileName: command.FileName);
+                _fileWriteServices.WriteFileFromLines(lines: fileControllerReturn.ToArray(), filePath: command.FilePath, fileName: $"{command.FileName}.RET");
 
             }
 

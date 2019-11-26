@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileReaderController.Infra"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileReaderController.Shared", "FileReaderController.Shared\FileReaderController.Shared.csproj", "{55C1861D-341E-4F34-B0EB-D732F0E2F774}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileReaderController.Tests", "FileReaderController.Tests\FileReaderController.Tests.csproj", "{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,5 +88,17 @@ Global
 		{55C1861D-341E-4F34-B0EB-D732F0E2F774}.Release|x64.Build.0 = Release|Any CPU
 		{55C1861D-341E-4F34-B0EB-D732F0E2F774}.Release|x86.ActiveCfg = Release|Any CPU
 		{55C1861D-341E-4F34-B0EB-D732F0E2F774}.Release|x86.Build.0 = Release|Any CPU
+		{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}.Debug|x64.Build.0 = Debug|Any CPU
+		{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}.Debug|x86.Build.0 = Debug|Any CPU
+		{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}.Release|x64.ActiveCfg = Release|Any CPU
+		{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}.Release|x64.Build.0 = Release|Any CPU
+		{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}.Release|x86.ActiveCfg = Release|Any CPU
+		{9C23B45C-B9D4-4E9C-9B47-6CF2B7C0CEF5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

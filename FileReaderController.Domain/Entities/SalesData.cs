@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
-using FileReaderController.Domain.Entities;
 using FileReaderController.Shared.Enums;
+using Flunt.Validations;
 
 namespace FileReaderController.Domain.Entities
 {
@@ -9,15 +8,19 @@ namespace FileReaderController.Domain.Entities
     {
         private IList<SalesItemData> salesItemList;
 
-        public SalesData(ELineType lineType, int saleId, string salesmanName) : base(lineType)
+        public SalesData(ELineType lineType, string saleId, string salesmanName) : base(lineType)
         {
             SaleId = saleId;
             SalesmanName = salesmanName;
 
             salesItemList = new List<SalesItemData>();
+
+            AddNotifications(new Contract()
+            .Requires()
+            .IsNotNullOrEmpty(salesmanName, "SalesData.SalesmanName", "Informacao nao definida"));
         }
 
-        public int SaleId { get; private set; }
+        public string SaleId { get; private set; }
         public string SalesmanName { get; private set; }
         public ICollection<SalesItemData> SalesItemList { get => salesItemList; }
 

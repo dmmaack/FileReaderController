@@ -16,7 +16,9 @@ namespace FileReaderController.Domain.Entities
             AddNotifications(new Contract().Requires()
             .HasMinLen(name, 3, "Client.Name", "O Nome contem menos de 3 caracteres.")
             .IsTrue(DocumentValidation.Validate(cNPJ, EDocumentType.CNPJ), "Client.CNPJ", "Documento invalido")
-            .IsNullOrEmpty(businessArea, "Client.BusinessArea","Informacao nao definida"));
+            .IsNotNullOrEmpty(cNPJ, "Client.CNPJ","Informacao nao definida")
+            .IsNotNullOrEmpty(businessArea, "Client.BusinessArea","Informacao nao definida")
+            );
         }
 
         public string CNPJ { get; private set; }
