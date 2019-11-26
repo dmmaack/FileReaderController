@@ -15,8 +15,7 @@ namespace FileReaderController.Application.Helpers.ToObject
                                 .Split(new char[',']).ToList();
 
             var sales = new SalesData(lineType: (ELineType)EnumeratorHelper.GetValueFromDescription<ELineType>(data[0]),
-                                      saleId: int.Parse(data[1]), salesmanName: data[5],
-                                      message: string.Empty, hasError: false);
+                                      saleId: int.Parse(data[1]), salesmanName: data[5]);
             
             itensList.ForEach(delegate(string item){
                 var itemArray = item.Split(new char['-']);

@@ -13,9 +13,7 @@ namespace FileReaderController.Application.Helpers.ToObject
             var client = new Client(lineType: (ELineType)EnumeratorHelper.GetValueFromDescription<ELineType>(data[0].ToString().ToString()),
                                     cNPJ: data[1].ToString(), 
                                     name: data[2].ToString(), 
-                                    businessArea: data[3].ToString(), 
-                                    message: string.Empty, 
-                                    hasError: false);
+                                    businessArea: data[3].ToString());
 
             return client;            
         }

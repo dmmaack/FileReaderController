@@ -12,9 +12,7 @@ namespace FileReaderController.Application.Helpers.ToObject
             var salesMan = new Salesman(lineType: (ELineType)EnumeratorHelper.GetValueFromDescription<ELineType>(data[0].ToString().ToString()),
                                         cPF: data[1].ToString(), 
                                         name: data[2].ToString(), 
-                                        salary: decimal.Parse(data[3]), 
-                                        message: string.Empty, 
-                                        hasError: false);
+                                        salary: decimal.Parse(data[3]));
 
             return salesMan;
         }

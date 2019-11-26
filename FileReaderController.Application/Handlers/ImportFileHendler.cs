@@ -1,46 +1,90 @@
 using FileReaderController.Application.Commands;
 using FileReaderController.Application.Helpers;
+using FileReaderController.Application.Helpers.ToObject;
 using FileReaderController.Domain.Entities;
 using FileReaderController.Shared.Commands;
 using FileReaderController.Shared.Enums;
 using FileReaderController.Shared.Hendlers;
+using FileReaderController.Shared.Services;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace FileReaderController.Application.Handlers
 {
     public class ImportFileHendler : IHendler<ImportFileCommand>
     {
-        public ImportFileHendler()
-        {
+        IConvertToObject<Client> convertToClient;
+        IConvertToObject<Salesman> convertToSalesman;
+        IConvertToObject<SalesData> convertToSalesdata;
+        FileReadSalesBase fileReadSales;
+        IFileWriteService _fileWriteServices;
 
+
+        public ImportFileHendler(IFileWriteService fileWriteServices)
+        {
+            convertToClient = new ConvertToClient();
+            convertToSalesman = new ConvertToSalesman();
+            convertToSalesdata = new ConvertToSalesData();
+
+            _fileWriteServices = fileWriteServices;
         }
 
         public ICommandResult ExecuteHendler(ImportFileCommand command)
         {
             if (command.IsValid)
             {
-                FileReadSalesBase fileRead  = new FileReadSalesBase(command.FileName, DateTime.Now);
+                var fileControllerReturn = new List<string>();
+
+                fileReadSales = new FileReadSalesBase(command.FileName, DateTime.Now);
+
+                if (fileReadSales.Invalid)
+                    return new CommandResult(false, fileReadSales.Notifications.ToString());
 
                 foreach (string line in command.FileReader)
                 {
                     ELineType lineType = ImportFileHelper.IdentifyLineType(line);
+                    string errorReturn = string.Empty;
 
-                    switch(lineType){
+                    switch (lineType)
+                    {
                         case ELineType.ClienteData:
-                            
-                        break;
+                            Client cli = convertToClient.ExecuteConversion(line);
+
+                            if (cli.Invalid)
+                                errorReturn = cli.AddErrorFromNotifications();
+
+                            fileReadSales.AddClient(cli);
+                            break;
                         case ELineType.SalesData:
+                            SalesData sale = convertToSalesdata.ExecuteConversion(line);
 
-                        break;
+                            if (sale.Invalid)
+                                errorReturn = sale.AddErrorFromNotifications();
+
+                            fileReadSales.AddSales(sale);
+                            break;
                         case ELineType.SalesmanData:
+                            Salesman salesman = convertToSalesman.ExecuteConversion(line);
 
-                        break;
+                            if (salesman.Invalid)
+                                errorReturn = salesman.AddErrorFromNotifications();
+
+                            fileReadSales.AddSalesman(salesman);
+                            break;
                     }
+
+                    fileControllerReturn.Add($"{line} => {errorReturn}");
+
                 }
+
+                var linesOutFile = fileReadSales.WriteFileLines();
+                _fileWriteServices.CreateFileFromLines(lines: linesOutFile, filePath: command.FilePath, fileName: command.FileName);
+                _fileWriteServices.CreateFileFromLines(lines: fileControllerReturn.ToArray(), filePath: command.FilePath, fileName: $"{command.FileName}.RET");
+
             }
 
-            return new CommandResult();
+            return new CommandResult(true, "Dados importados com sucesso");
         }
     }
 }

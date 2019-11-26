@@ -9,8 +9,7 @@ namespace FileReaderController.Domain.Entities
     {
         private IList<SalesItemData> salesItemList;
 
-        public SalesData(ELineType lineType, int saleId, string salesmanName,
-                         string message, bool hasError) : base(lineType, message, hasError)
+        public SalesData(ELineType lineType, int saleId, string salesmanName) : base(lineType)
         {
             SaleId = saleId;
             SalesmanName = salesmanName;

@@ -4,17 +4,18 @@ using FileReaderController.Shared.Services;
 namespace FileReaderController.Infra.Services
 {
     public class FileReadService : IFileReadService
-    {
-        public string _filePath { get; private set; }
-        public string _fileName { get; private set; }
-
-        public FileReadService(string filePath, string fileName)
+    {  
+        public string[] GetLinesFromFile(string filePath, string fileName)
         {
-            _filePath = filePath;
-            _fileName = fileName;
-        }
+            string fileToRead = Path.Combine(filePath, fileName);
+            string fileToMove = Path.Combine(Path.Combine(filePath, "Processed"), fileName);
 
-        public string[] GetLinesFromFile() => File.ReadAllLines(Path.Combine(_filePath, _fileName));
+            var linesReaded = File.ReadAllLines(fileToRead);
+
+            File.Move(fileToRead, fileToMove);
+
+            return linesReaded;
+        }
 
     }
 }
