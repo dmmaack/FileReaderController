@@ -3,6 +3,9 @@ using FileReaderController.Application.Commands;
 using FileReaderController.Shared.Services;
 using Microsoft.Extensions.Configuration;
 using FileReaderController.Infra.Services;
+using System;
+using System.IO;
+using System.Text;
 
 namespace FileReaderController.App
 {
@@ -15,14 +18,32 @@ namespace FileReaderController.App
         private string _dirIn { get; set; }
         private string _dirOut { get; set; }
 
+        public string GetUserHome
+        {
+            get
+            {
+                var homeDrive = Environment.GetEnvironmentVariable("HOMEDRIVE");
+                if (!string.IsNullOrWhiteSpace(homeDrive))
+                {
+                    var homePath = Environment.GetEnvironmentVariable("HOMEPATH");
+                    if (!string.IsNullOrWhiteSpace(homePath))
+                        return $"{homeDrive}{homePath}";
+                }
+
+                return "c:";
+            }
+        }
+
         public ImportFileApp(IHendler<ImportFileCommand> importFileHendler,
                              IFileReadService fileReadService, IConfigurationRoot configuration)
         {
             this._importFileHendler = importFileHendler;
             this._fileReadService = fileReadService;
 
-            _dirIn = configuration["ImportDirectoryInput"];
-            _dirOut = configuration["ImportDirectoryOutput"];
+            string pathUser = GetUserHome;
+
+            _dirIn = $"{pathUser}{configuration["ImportDirectoryInput"]}";
+            _dirOut = $"{pathUser}{configuration["ImportDirectoryOutput"]}";
 
             this._directoryReadService = new DirectoryReadService(_dirIn);
         }
@@ -30,6 +51,7 @@ namespace FileReaderController.App
         public string ImportFile()
         {
             bool hasFiles = false;
+            StringBuilder returnMessages = new StringBuilder();
 
             if (_directoryReadService.ValidateDirectory())
                 hasFiles = _directoryReadService.HasFiles();
@@ -40,8 +62,8 @@ namespace FileReaderController.App
 
                 foreach (var item in files)
                 {
-                    string[] fileArray = item.Split("/");
-                    string fileName = fileArray[fileArray.Length-1];
+                    string[] fileArray = item.Split("\\");
+                    string fileName = fileArray[fileArray.Length - 1];
 
                     string[] lines = _fileReadService.GetLinesFromFile(_dirIn, fileName);
 
@@ -54,16 +76,15 @@ namespace FileReaderController.App
 
                     var result = _importFileHendler.ExecuteHendler(command);
 
-                    return $"Sucess: {result.Sucess} - Mensagem: {result.Message}";
+                    returnMessages.AppendLine($"Sucess: {result.Sucess} - Mensagem: {result.Message}");
                 }
+
+                return returnMessages.ToString();
             }
 
             return $"Sucess: {hasFiles} - Mensagem: Arquivos Inexistentes";
 
         }
-
-
-
 
 
     }

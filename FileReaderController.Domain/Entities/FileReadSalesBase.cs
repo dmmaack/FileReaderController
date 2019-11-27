@@ -47,19 +47,19 @@ namespace FileReaderController.Domain.Entities
 
         public void AddSales(SalesData sales)
         {
-            if (salesList.Contains(sales))
+            if (!salesList.Contains(sales))
                 salesList.Add(sales);
         }
 
         public void AddSalesman(Salesman salesman)
         {
-            if (salesmanList.Contains(salesman))
+            if (!salesmanList.Contains(salesman))
                 salesmanList.Add(salesman);
         }
 
         private bool FileNameValidation()
         {
-            string seq = DateTime.Now.ToString("yyyyMMddhhmmss");
+            string seq = DateTime.Now.ToString("yyyyMMdd");
             string name = FileName.Split('.')[0];
             return name.EndsWith(seq);
         }
@@ -82,6 +82,8 @@ namespace FileReaderController.Domain.Entities
             content.Add($"Total de Vendedores s/ erros: {salesmanWithoutErrors}");
             content.Add(Environment.NewLine);
             content.Add($"Maior venda: {GetBiggestSale()}");
+            content.Add(Environment.NewLine);
+            content.Add(GetBiggestSale());
 
             return content.ToArray();
         }
@@ -110,6 +112,25 @@ namespace FileReaderController.Domain.Entities
                                                                                 .Aggregate((sales1, sales2) => sales1.Price > sales2.Price ? sales1 : sales2);
 
             return $"Vendedor: {salesInfo.Salesman} - Valor venda: {salesInfo.Price}";
+        }        
+
+        public void AddErrorMessage(string message, bool hasError)
+        {
+            Message = message;
+            HasError = hasError;
+        }
+
+        public string AddErrorFromNotifications()
+        {
+            var notifications = this.Notifications
+                                .Select(s => $"{s.Property}-{s.Message}")
+                                .ToArray()
+                                .Aggregate((current, next) => $"{current} | {next}");
+
+
+            AddErrorMessage(notifications, true);
+
+            return notifications;
         }
 
 

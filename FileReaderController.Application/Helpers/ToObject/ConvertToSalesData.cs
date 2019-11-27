@@ -13,17 +13,17 @@ namespace FileReaderController.Application.Helpers.ToObject
             var itensList = data[2]
                                 .Replace("[", string.Empty)
                                 .Replace("]", string.Empty)
-                                .Split(new char[',']).ToList();
+                                .Split(",").ToList();
 
             var sales = new SalesData(lineType: (ELineType)EnumeratorHelper.GetValueFromDescription<ELineType>(data[0]),
-                                      saleId: data[1], salesmanName: data[5]);
+                                      saleId: data[1], salesmanName: data[3]);
             
             itensList.ForEach(delegate(string item){
-                var itemArray = item.Split(new char['-']);
+                var itemArray = item.Split("-");
 
                 var saleItens = new SalesItemData(itemId: int.Parse(itemArray[0]), 
                                                   itemQuantity: int.Parse(itemArray[1]), 
-                                                  itemPrice: decimal.Parse(itemArray[2]));
+                                                  itemPrice: decimal.Parse(itemArray[2].Replace(".", ",")));
 
                 sales.AddItens(saleItens);
             });

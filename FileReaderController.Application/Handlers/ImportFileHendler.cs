@@ -38,7 +38,7 @@ namespace FileReaderController.Application.Handlers
                 fileReadSales = new FileReadSalesBase(command.FileName, DateTime.Now);
 
                 if (fileReadSales.Invalid)
-                    return new CommandResult(false, fileReadSales.Notifications.ToString());
+                    return new CommandResult(false, fileReadSales.AddErrorFromNotifications());
 
                 foreach (string line in command.FileReader)
                 {

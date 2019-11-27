@@ -18,4 +18,8 @@
     <ProjectReference Include="..\FileReaderController.Infra\FileReaderController.Infra.csproj" />
   </ItemGroup>
 
+<ItemGroup>
+   <None Include="appsettings.json" CopyToPublishDirectory="Always" />
+</ItemGroup>
+
 </Project>

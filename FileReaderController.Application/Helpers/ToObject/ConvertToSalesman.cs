@@ -13,7 +13,7 @@ namespace FileReaderController.Application.Helpers.ToObject
             var salesMan = new Salesman(lineType: (ELineType)EnumeratorHelper.GetValueFromDescription<ELineType>(data[0]),
                                         cPF: data[1], 
                                         name: data[2], 
-                                        salary: decimal.Parse(data[3]));
+                                        salary: decimal.Parse(data[3].Replace(".", ",")));
 
             AddNotifications(salesMan);
 
