@@ -17,7 +17,8 @@ namespace FileReaderController.Domain.Entities
 
             AddNotifications(new Contract()
             .Requires()
-            .IsNotNullOrEmpty(salesmanName, "SalesData.SalesmanName", "Informacao nao definida"));
+            .IsNotNullOrEmpty(salesmanName, "SalesData.SalesmanName", "Informacao nao definida")
+            .HasMinLen(salesmanName, 3, "SalesData.salesmanName", "O Nome contem menos de 3 caracteres."));
         }
 
         public string SaleId { get; private set; }

@@ -16,7 +16,8 @@ namespace FileReaderController.Domain.Entities
 
             AddNotifications(new Contract().Requires()
             .HasMinLen(name, 3, "Salesman.Name", "O Nome contem menos de 3 caracteres.")
-            .IsTrue(DocumentValidation.Validate(cPF, EDocumentType.CPF), "Salesman.CPF", "Documento invalido"));
+            .IsTrue(DocumentValidation.Validate(cPF, EDocumentType.CPF), "Salesman.CPF", "Documento invalido")            
+            .IsNotNullOrEmpty(cPF, "Client.CPF","Informacao nao definida"));
 
         }
 

@@ -81,8 +81,7 @@ namespace FileReaderController.Domain.Entities
             content.Add($"Total de Vendedores c/ erros: {salesmanWithErrors}");
             content.Add($"Total de Vendedores s/ erros: {salesmanWithoutErrors}");
             content.Add(Environment.NewLine);
-            content.Add($"Maior venda: {GetBiggestSale()}");
-            content.Add(Environment.NewLine);
+            content.Add($"Maior venda:");
             content.Add(GetBiggestSale());
 
             return content.ToArray();
